@@ -9,23 +9,20 @@ app.use(express.json()); //Used to parse JSON bodies
 app.use(cors());
 
 app.put("/highscore", (req, res) => {
-  console.log("testing", req);
-  console.log("testing", req.body);
-
   if (+req.body.score > +data.highscore) {
     data.highscore = req.body.score;
     fs.writeFileSync("./data.json", JSON.stringify(data));
     res.json({
       status: "success",
-      message: "new highscore set",
+      message: "High score updated",
       highscore: data.highscore,
     });
   } else {
     res.json({
       status: "success",
-      message: "not a highscore",
-      yourscore: req.body.score,
-      highscore: data.highscore,
+      message: "Highscore not exceeded",
+      currentScore: req.body.score,
+      highScore: data.highscore,
     });
   }
 });
@@ -34,6 +31,6 @@ app.get("/highscore", (_req, res) => {
   res.json(data);
 });
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+app.listen(3001, () => {
+  console.log("Server is running on port 3001");
 });
